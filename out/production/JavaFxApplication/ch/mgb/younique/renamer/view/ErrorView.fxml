@@ -22,7 +22,7 @@
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label text="Es ist ein unbekannter Fehler aufgetreten." GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Label fx:id="errorLabelDisplay" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <font>
                 <Font size="15.0" />
             </font>

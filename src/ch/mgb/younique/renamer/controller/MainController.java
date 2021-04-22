@@ -1,5 +1,6 @@
 package ch.mgb.younique.renamer.controller;
 
+import ch.mgb.younique.renamer.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -79,6 +80,8 @@ public class MainController implements Initializable {
                 if (selectedExcelFile != null && selectedImgDirectory != null){
                     System.out.println("GO!\n-Excel: " + selectedExcelFile.getPath() + "\n-Dir: " + selectedImgDirectory.getPath());
                     try {
+                        Main.renamerModel.errorMessage = "Es ist ein unbekannter Fehler aufgetreten.";
+                        
                         Stage secondaryStage = new Stage();
                         Parent root = FXMLLoader.load(getClass().getResource("../view/ErrorView.fxml"));
                         secondaryStage.setTitle("Renamer");

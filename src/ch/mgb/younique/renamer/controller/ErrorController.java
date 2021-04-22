@@ -1,5 +1,6 @@
 package ch.mgb.younique.renamer.controller;
 
+import ch.mgb.younique.renamer.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,7 +25,7 @@ public class ErrorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        errorLabelDisplay.setText("Es ist ein unbekannter Fehler aufgetreten.");
+        errorLabelDisplay.setText(Main.renamerModel.errorMessage);
         setButtonHandler();
     }
 

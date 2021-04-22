@@ -84,7 +84,10 @@ public class MainController implements Initializable {
                         secondaryStage.setTitle("Renamer");
                         secondaryStage.setScene(new Scene(root, 400, 200));
                         secondaryStage.setResizable(false);
-                        secondaryStage.showAndWait();
+                        secondaryStage.show();
+
+                        Stage stage = (Stage) mainBtnGo.getScene().getWindow();
+                        stage.close();
                     }catch (IOException e){
                         e.printStackTrace();
                     }

@@ -6,9 +6,9 @@
 
 <GridPane alignment="center" hgap="10" prefHeight="400.0" prefWidth="600.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.mgb.younique.renamer.controller.MainController">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="489.0" minWidth="10.0" prefWidth="20.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="489.0" minWidth="10.0" prefWidth="420.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="381.0" minWidth="10.0" prefWidth="160.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="10.0" prefWidth="420.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="160.0" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
@@ -16,48 +16,61 @@
         <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
     </rowConstraints>
-   <children>
-      <Label text="Artikel Renamer" GridPane.columnIndex="1" GridPane.rowIndex="0">
-         <font>
-            <Font size="31.0" />
-         </font>
-      </Label>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Um eine Dateimenge mit den jeweiligen Artikelnummern zu benennen, wählen Sie eine Excel-Tabelle mit den EAN-Nummern in Spalte A und den Artiklenummern in spalte B." wrappingWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <font>
-            <Font size="16.0" />
-         </font></Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wählen Sie das Verzeichnis mit der Bildmenge. ACHTUNG: Alle Files im Verzeichnis werden umbenannt, sofern eine korrespondierende Artikelnummer in der Excl-Tabelle existiert." wrappingWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Text>
-      <Button fx:id="mainBtnCancel" text="Abbrechen" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <font>
-            <Font size="15.0" />
-         </font></Button>
-      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="160.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <children>
-            <Button fx:id="mainBtnExcelSelect" text="Excel auswählen">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Label fx:id="mainLabelExcelSelect" />
-         </children>
-      </VBox>
-      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="160.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <children>
-            <Button fx:id="mainBtnDirSelect" text="Verz. auswählen">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Label fx:id="mainLabelDirSelect"/>
-         </children>
-      </VBox>
-      <Button fx:id="mainBtnGo" text="GO" GridPane.columnIndex="2" GridPane.rowIndex="3">
-         <font>
-            <Font size="15.0" />
-         </font></Button>
-   </children>
+    <children>
+        <Label text="Artikel Renamer" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <font>
+                <Font size="31.0" />
+            </font>
+        </Label>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Um eine Dateimenge mit den jeweiligen Artikelnummern zu benennen, wählen Sie eine Excel-Tabelle mit den EAN-Nummern in Spalte A und den Artiklenummern in spalte B." wrappingWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wählen Sie das Verzeichnis mit der Bildmenge. ACHTUNG: Alle Files im Verzeichnis werden umbenannt, sofern eine korrespondierende Artikelnummer in der Excl-Tabelle existiert." wrappingWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Text>
+        <VBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <children>
+                <Button fx:id="mainBtnCancel" text="Abbrechen">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Label fx:id="mainErrorDisplay" textFill="RED" />
+            </children>
+        </VBox>
+        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="160.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <children>
+                <Button fx:id="mainBtnExcelSelect" text="Excel auswählen">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Label fx:id="mainLabelExcelSelect" />
+            </children>
+        </VBox>
+        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="160.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <children>
+                <Button fx:id="mainBtnDirSelect" text="Verz. auswählen">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Label fx:id="mainLabelDirSelect" />
+            </children>
+        </VBox>
+        <VBox alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <children>
+                <Button fx:id="mainBtnGo" text="GO" >
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Label/>
+            </children>
+        </VBox>
+    </children>
 </GridPane>

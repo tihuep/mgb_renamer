@@ -3,7 +3,10 @@ package ch.mgb.younique.renamer.controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.DirectoryChooser;
@@ -11,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,6 +27,7 @@ public class MainController implements Initializable {
     public Button mainBtnGo;
     public Label mainLabelExcelSelect;
     public Label mainLabelDirSelect;
+    public Label mainErrorDisplay;
 
     private File selectedExcelFile = null;
     private File selectedImgDirectory = null;
@@ -73,8 +78,25 @@ public class MainController implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 if (selectedExcelFile != null && selectedImgDirectory != null){
                     System.out.println("GO!\n-Excel: " + selectedExcelFile.getPath() + "\n-Dir: " + selectedImgDirectory.getPath());
+                    try {
+                        Stage secondaryStage = new Stage();
+                        Parent root = FXMLLoader.load(getClass().getResource("../view/ErrorView.fxml"));
+                        secondaryStage.setTitle("Renamer");
+                        secondaryStage.setScene(new Scene(root, 400, 200));
+                        secondaryStage.setResizable(false);
+                        secondaryStage.showAndWait();
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
                 }else {
                     System.out.println("Please finish selection!");
+                    if (selectedExcelFile == null && selectedImgDirectory != null){
+                        mainErrorDisplay.setText("Bitte wählen Sie ein Excel-File aus!");
+                    }else if (selectedExcelFile != null && selectedImgDirectory == null){
+                        mainErrorDisplay.setText("Bitte wählen Sie ein Verzeichnis aus!");
+                    }else if (selectedExcelFile == null && selectedImgDirectory == null){
+                        mainErrorDisplay.setText("Bitte wählen Sie ein Excel-File und ein Verzeichnis aus!");
+                    }
                 }
             }
         });

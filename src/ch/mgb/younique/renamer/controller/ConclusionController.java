@@ -25,7 +25,7 @@ public class ConclusionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        errorLabelDisplay.setText(Main.renamerModel.errorMessage);
+        errorLabelDisplay.setText(Main.renamerModel.conclusionMessage);
         setButtonHandler();
     }
 

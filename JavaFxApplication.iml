@@ -10,5 +10,21 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="org.apache.poi:poi:4.1.1" level="project" />
     <orderEntry type="library" name="org.apache.poi:poi-ooxml:4.1.1" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/javafx-sdk-11.0.2/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <NATIVE>
+          <root url="file://$USER_HOME$/javafx-sdk-11.0.2/lib" />
+        </NATIVE>
+        <SOURCES>
+          <root url="file://$USER_HOME$/javafx-sdk-11.0.2/lib" />
+        </SOURCES>
+        <jarDirectory url="file://$USER_HOME$/javafx-sdk-11.0.2/lib" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/javafx-sdk-11.0.2/lib" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>

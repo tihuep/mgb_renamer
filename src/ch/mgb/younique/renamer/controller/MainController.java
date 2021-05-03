@@ -79,10 +79,21 @@ public class MainController implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 if (selectedExcelFile != null && selectedImgDirectory != null){
                     System.out.println("GO!\n-Excel: " + selectedExcelFile.getPath() + "\n-Dir: " + selectedImgDirectory.getPath());
-                    Main.renamerModel.startRenaming(selectedExcelFile, selectedImgDirectory);
-                    try {
-                        Main.renamerModel.errorMessage = "Es ist ein unbekannter Fehler aufgetreten.\nBitte versuchen Sie es erneut!";
 
+                    String errorMessageFooter = "\nBitte versuchen Sie es erneut!";
+                    try {
+                        Main.renamerModel.startRenaming(selectedExcelFile, selectedImgDirectory);
+
+                        //TODO
+
+
+                    }catch (IOException ioException){
+                        Main.renamerModel.conclusionMessage = "Ein unbekannter Fehler ist aufgetreten." + errorMessageFooter;
+                    }catch (Exception exception){
+                        Main.renamerModel.conclusionMessage = exception.getMessage() + errorMessageFooter;
+                    }
+
+                    try {
                         Stage secondaryStage = new Stage();
                         Parent root = FXMLLoader.load(getClass().getResource("../view/ConclusionView.fxml"));
                         secondaryStage.setTitle("Renamer");

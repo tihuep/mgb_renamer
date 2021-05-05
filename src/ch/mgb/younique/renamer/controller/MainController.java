@@ -86,7 +86,6 @@ public class MainController implements Initializable {
 
                         //TODO
 
-
                     }catch (IOException ioException){
                         Main.renamerModel.conclusionMessage = "Ein unbekannter Fehler ist aufgetreten." + errorMessageFooter;
                     }catch (Exception exception){

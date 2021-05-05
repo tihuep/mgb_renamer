@@ -17,14 +17,14 @@ public class RenamerModel {
     public String conclusionMessage = "";
 
     public Integer excelRowStart = 1;
-    public Integer excelRowEnd = 99;
-    public Integer excelColA = 0;
-    public Integer excelColB = 1;
+    public Integer excelRowEnd = 413;
+    public Integer excelColA = 8;
+    public Integer excelColB = 0;
 
     public String[] fileExtensions = new String[] {"jpg", "jpeg", "jpe", "jif", "jfif", "jfi", "png", "gif", "webp", "tiff", "tif", "psd", "raw", "arw", "cr2", "nrw", "k25", "bmp", "dib", "heif", "heic", "ind", "indd", "indt", "jp2", "j2k", "jpf", "jpx", "jpm", "mj2", "svg", "svgz", "ai", "eps", "pdf"};
 
     public void startRenaming(File excel, File directory) throws ExcelException, DirectoryException, IOException{
-        Map<Integer, List<String>> excelData = new HashMap<>();
+        Map<Integer, String[]> excelData = new HashMap<>();
         try {
             excelData = getExcelData(excel);
         }catch (IOException e){
@@ -61,55 +61,56 @@ public class RenamerModel {
         return false;
     }
 
-    private Map<Integer, List<String>> getExcelData(File excel) throws ExcelException, IOException {
-        FileInputStream file = new FileInputStream(excel);
-        Workbook workbook = new XSSFWorkbook(file);
-
-        Sheet sheet = workbook.getSheetAt(0);
-        Map<Integer, List<String>> data = new HashMap<>();
-        int i = 0;
-        int y = 0;
-        for (Row row : sheet){
-            if (i >= excelRowStart && i <= excelRowEnd) {
-                data.put(i, new ArrayList<String>());
-                y = 0;
-                for (Cell cell : row) {
-                    if (y == excelColA )
-                    switch (cell.getCellType()) {
-                        case STRING:
-                            data.get(i).add(cell.getStringCellValue());
-                            break;
-                        case NUMERIC:
-                            if (DateUtil.isCellDateFormatted(cell)) {
-                                data.get(i).add(cell.getDateCellValue().toString());
-                            } else {
-                                data.get(i).add(Double.toString(cell.getNumericCellValue()));
-                            }
-                            break;
-                        case BOOLEAN:
-                            data.get(i).add(Boolean.toString(cell.getBooleanCellValue()));
-                            break;
-                        case FORMULA:
-                            data.get(i).add(cell.getCellFormula());
-                            break;
-                        default:
-                            data.get(i).add("");
-                    }
-                    y++;
-                }
-                i++;
-            }
-        }
-        return data;
-    }
-
-    private boolean validateExcel(Map<Integer, List<String>> excelData) throws ExcelException{
+    private boolean validateExcel(Map<Integer, String[]> excelData) throws ExcelException{
         for (int i = excelRowStart; i <= excelRowEnd; i++){
-            if (excelData.get(i).get(excelColA) == "") {
+            if (excelData.get(i)[0] == "") {
                 throw new ExcelException("In der ersten Spalte gibt es ein leeres Feld");
             }
         }
         return true;
+    }
+
+    private Map<Integer, String[]> getExcelData(File excel) throws ExcelException, IOException {
+        FileInputStream file = new FileInputStream(excel);
+        Workbook workbook = new XSSFWorkbook(file);
+
+        Sheet sheet = workbook.getSheetAt(0);
+        Map<Integer, String[]> data = new HashMap<>();
+        int i = 0;
+        int j = 0;
+        for (Row row : sheet){
+            if (i >= excelRowStart && i <= excelRowEnd) {
+                data.put(i, new String[2]);
+                j = 0;
+                for (Cell cell : row) {
+                    if (j == excelColA || j == excelColB) {
+                        switch (cell.getCellType()) {
+                            case STRING:
+                                data.get(i)[j == excelColA ? 0 : 1] = cell.getStringCellValue();
+                                break;
+                            case NUMERIC:
+                                if (DateUtil.isCellDateFormatted(cell)) {
+                                    data.get(i)[j == excelColA ? 0 : 1] = cell.getDateCellValue().toString();
+                                } else {
+                                    data.get(i)[j == excelColA ? 0 : 1] = String.format("%.0f", cell.getNumericCellValue());
+                                }
+                                break;
+                            case BOOLEAN:
+                                data.get(i)[j == excelColA ? 0 : 1] = Boolean.toString(cell.getBooleanCellValue());
+                                break;
+                            case FORMULA:
+                                data.get(i)[j == excelColA ? 0 : 1] = cell.getCellFormula();
+                                break;
+                            default:
+                                data.get(i)[j == excelColA ? 0 : 1] = "";
+                        }
+                    }
+                    j++;
+                }
+            }
+            i++;
+        }
+        return data;
     }
 
     private String makeFileNamePattern(String[] extensions){

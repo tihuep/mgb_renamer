@@ -99,7 +99,7 @@ public class MainController implements Initializable {
                         readExcelParams();
                         Main.renamerModel.startRenaming(selectedExcelFile, selectedImgDirectory);
 
-                        //TODO
+                        Main.renamerModel.conclusionMessage = "Die Bilder konnten erfolgreich umbenannt werden.";
 
                     }catch (IOException ioException){
                         Main.renamerModel.conclusionMessage = "Ein unbekannter Fehler ist aufgetreten." + errorMessageFooter;

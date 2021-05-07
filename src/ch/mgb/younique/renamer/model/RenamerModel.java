@@ -23,6 +23,8 @@ public class RenamerModel {
 
     public String[] fileExtensions = new String[] {"jpg", "jpeg", "jpe", "jif", "jfif", "jfi", "png", "gif", "webp", "tiff", "tif", "psd", "raw", "arw", "cr2", "nrw", "k25", "bmp", "dib", "heif", "heic", "ind", "indd", "indt", "jp2", "j2k", "jpf", "jpx", "jpm", "mj2", "svg", "svgz", "ai", "eps", "pdf"};
 
+    private List<String> renamedFiles = new ArrayList<String>();
+
     public void startRenaming(File excel, File directory) throws ExcelException, DirectoryException, IOException{
         Map<Integer, String[]> excelData = new HashMap<>();
         try {
@@ -31,11 +33,38 @@ public class RenamerModel {
             throw new ExcelException("Die Excel-Daten konnten nicht gelesen werden.");
         }
         if (validateDirectory(directory) && validateExcel(excelData)){
-
+            rename(directory, excelData);
         }
+    }
 
-        //TODO go on
+    private void rename(File directory, Map<Integer, String[]> excelData){
+        File[] directoryListing = directory.listFiles();
+        for (int i = 1; i < excelData.size(); i++){
+            for (File file : directoryListing) {
+                String filename = file.getName();
+                if (filename.matches(makeFileNamePattern(this.fileExtensions))) {
+                    String ean = excelData.get(i)[0];
+                    String matnr = excelData.get(i)[1];
+                    if (filename.contains(ean)) {
+                        int p = filename.lastIndexOf(".");
+                        String filenameExt = filename.substring(p+1);
 
+                        File newFile = new File(directory, matnr.substring(0, 4) + "_" + matnr.substring(4, 7) + "_" + matnr.substring(7) + "_s" + (countMatnrOccurences(renamedFiles, matnr.substring(0, 4) + "_" + matnr.substring(4, 7) + "_" + matnr.substring(7) + ".*") + 1) + "." + filenameExt);
+                        file.renameTo(newFile);
+                        renamedFiles.add(newFile.getName());
+                    }
+                }
+            }
+        }
+    }
+
+    private int countMatnrOccurences(List<String> list, String pattern){
+        int output = 0;
+        for (String listItem : list) {
+            if (listItem.matches(pattern))
+                output++;
+        }
+        return output;
     }
 
     private boolean validateDirectory(File directory) throws DirectoryException, IOException {

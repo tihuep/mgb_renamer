@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -26,6 +27,10 @@ public class MainController implements Initializable {
     public Button mainBtnExcelSelect;
     public Button mainBtnDirSelect;
     public Button mainBtnGo;
+    public TextField mainInpColA;
+    public TextField mainInpColB;
+    public TextField mainInpRowStart;
+    public TextField mainInpRowEnd;
     public Label mainLabelExcelSelect;
     public Label mainLabelDirSelect;
     public Label mainErrorDisplay;
@@ -35,6 +40,10 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        mainInpColA.setText("I");
+        mainInpColB.setText("A");;
+        mainInpRowStart.setText("2");
+        mainInpRowEnd.setText("414");
         setButtonHandlers();
     }
 
@@ -58,6 +67,11 @@ public class MainController implements Initializable {
                 if (selectedFile != null) {
                     mainLabelExcelSelect.setText(selectedFile.getName());
                     selectedExcelFile = selectedFile;
+
+                    mainInpColA.setDisable(false);
+                    mainInpColB.setDisable(false);
+                    mainInpRowStart.setDisable(false);
+                    mainInpRowEnd.setDisable(false);
                 }
             }
         });
@@ -82,6 +96,7 @@ public class MainController implements Initializable {
 
                     String errorMessageFooter = "\nBitte versuchen Sie es erneut!";
                     try {
+                        readExcelParams();
                         Main.renamerModel.startRenaming(selectedExcelFile, selectedImgDirectory);
 
                         //TODO
@@ -108,14 +123,79 @@ public class MainController implements Initializable {
                 }else {
                     System.out.println("Please finish selection!");
                     if (selectedExcelFile == null && selectedImgDirectory != null){
-                        mainErrorDisplay.setText("Bitte wählen Sie ein Excel-File aus!");
+                        displayError("Bitte wählen Sie ein Excel-File aus!");
                     }else if (selectedExcelFile != null && selectedImgDirectory == null){
-                        mainErrorDisplay.setText("Bitte wählen Sie ein Verzeichnis aus!");
+                        displayError("Bitte wählen Sie ein Verzeichnis aus!");
                     }else if (selectedExcelFile == null && selectedImgDirectory == null){
-                        mainErrorDisplay.setText("Bitte wählen Sie ein Excel-File und ein Verzeichnis aus!");
+                        displayError("Bitte wählen Sie ein Excel-File und ein Verzeichnis aus!");
                     }
                 }
             }
         });
+    }
+
+    private void displayError(String message) {
+        mainErrorDisplay.setText(message);
+    }
+
+    private boolean readExcelParams() {
+        String colA = mainInpColA.getText();
+        String colB = mainInpColB.getText();
+        String rowStart = mainInpRowStart.getText();
+        String rowEnd = mainInpRowEnd.getText();
+
+        if (colA.matches("^\\D+$") && colB.matches("^\\D+$")){
+            if (rowStart.matches("^\\d+$") && rowEnd.matches("^\\d+$")) {
+
+                String str = colA;
+                char[] ch  = str.toCharArray();
+                for(char c : ch){
+                    int temp = (int)c;
+                    //https://www.geeksforgeeks.org/check-whether-the-given-character-is-in-upper-case-lower-case-or-non-alphabetic-character/
+                    int temp_integer = 64; //for upper case
+                    if (c >= 'a' && c <= 'z') {
+                        temp_integer = 96; // for lower case
+                    }
+                    //https://stackoverflow.com/questions/8879714/how-to-get-numeric-position-of-alphabets-in-java
+                    if(temp<=122 & temp>=65)
+                        Main.renamerModel.excelColA = Main.renamerModel.excelColA * 26 + temp-temp_integer;
+                }
+                Main.renamerModel.excelColA -= Main.renamerModel.excelColA > 0 ? 1 : 0;
+
+                str = colB;
+                ch  = str.toCharArray();
+                for(char c : ch){
+                    int temp = (int)c;
+                    //https://www.geeksforgeeks.org/check-whether-the-given-character-is-in-upper-case-lower-case-or-non-alphabetic-character/
+                    int temp_integer = 64; //for upper case
+                    if (c >= 'a' && c <= 'z') {
+                        temp_integer = 96; // for lower case
+                    }
+                    //https://stackoverflow.com/questions/8879714/how-to-get-numeric-position-of-alphabets-in-java
+                    if(temp<=122 & temp>=65)
+                        Main.renamerModel.excelColB = Main.renamerModel.excelColB * 26 + temp-temp_integer;
+                }
+                Main.renamerModel.excelColB -= Main.renamerModel.excelColB > 0 ? 1 : 0;
+
+                int rowStartInt = Integer.parseInt(rowStart);
+                int rowEndInt = Integer.parseInt(rowEnd);
+                if (rowStartInt > 0 && rowEndInt > 0) {
+                    if (rowStartInt <= rowEndInt){
+                        Main.renamerModel.excelRowStart = rowStartInt - 1;
+                        Main.renamerModel.excelRowEnd = rowEndInt - 1;
+                        return true;
+                    }else{
+                        displayError("Bitte geben Sie Zahlen über 0 für den Reihenbereich an!");
+                    }
+                }else {
+                    displayError("Bitte geben Sie Zahlen über 0 für den Reihenbereich an!");
+                }
+            }else {
+                displayError("Bitte geben Sie Zahlen für den Reihenbereich an!");
+            }
+        }else {
+            displayError("Bitte geben Sie Buchstaben für die Spaltenauswahl an!");
+        }
+        return false;
     }
 }

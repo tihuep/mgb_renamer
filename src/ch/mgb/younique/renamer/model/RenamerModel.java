@@ -16,9 +16,9 @@ import java.util.Map;
 public class RenamerModel {
     public String conclusionMessage = "";
 
-    public Integer excelRowStart = 1;
-    public Integer excelRowEnd = 413;
-    public Integer excelColA = 8;
+    public Integer excelRowStart = 0;
+    public Integer excelRowEnd = 0;
+    public Integer excelColA = 0;
     public Integer excelColB = 0;
 
     public String[] fileExtensions = new String[] {"jpg", "jpeg", "jpe", "jif", "jfif", "jfi", "png", "gif", "webp", "tiff", "tif", "psd", "raw", "arw", "cr2", "nrw", "k25", "bmp", "dib", "heif", "heic", "ind", "indd", "indt", "jp2", "j2k", "jpf", "jpx", "jpm", "mj2", "svg", "svgz", "ai", "eps", "pdf"};

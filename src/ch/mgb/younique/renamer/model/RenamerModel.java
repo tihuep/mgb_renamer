@@ -56,15 +56,21 @@ public class RenamerModel {
                 throw new DirectoryException("Dies ist kein Verzeichnis.");
             }
         }else{
-            throw new DirectoryException("Das Verzeichnis existiert nicht");
+            throw new DirectoryException("Das Verzeichnis existiert nicht.");
         }
         return false;
     }
 
     private boolean validateExcel(Map<Integer, String[]> excelData) throws ExcelException{
         for (int i = excelRowStart; i <= excelRowEnd; i++){
-            if (excelData.get(i)[0] == "") {
-                throw new ExcelException("In der ersten Spalte gibt es ein leeres Feld");
+            if (excelData.get(i)[0].equals("") && excelData.get(i)[1].equals("")) {
+                throw new ExcelException("In Zeile " + (i + 1) + " sind beide Felder leer." );
+            }
+            if (excelData.get(i)[0].equals("")){
+                throw new ExcelException("In Zeile " + (i + 1) + " ist das erste Feld leer." );
+            }
+            if (excelData.get(i)[1].equals("")){
+                throw new ExcelException("In Zeile " + (i + 1) + " ist das zweite Feld leer." );
             }
         }
         return true;

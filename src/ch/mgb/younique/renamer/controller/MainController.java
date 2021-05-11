@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -45,6 +46,42 @@ public class MainController implements Initializable {
         mainInpRowStart.setText("2");
         mainInpRowEnd.setText("414");
         setButtonHandlers();
+
+        //prevents digit input into column fields
+        mainInpColA.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (mainInpColA.getText().matches(".*\\d+.*")){
+                    mainInpColA.setText(mainInpColA.getText().replaceAll("\\d",""));
+                }
+            }
+        });
+        mainInpColB.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (mainInpColB.getText().matches(".*\\d+.*")){
+                    mainInpColB.setText(mainInpColB.getText().replaceAll("\\d",""));
+                }
+            }
+        });
+
+        //prevents non-digit input into row fields
+        mainInpRowStart.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (mainInpRowStart.getText().matches(".*\\D+.*")){
+                    mainInpRowStart.setText(mainInpRowStart.getText().replaceAll("\\D",""));
+                }
+            }
+        });
+        mainInpRowEnd.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (mainInpRowEnd.getText().matches(".*\\D+.*")){
+                    mainInpRowEnd.setText(mainInpRowEnd.getText().replaceAll("\\D",""));
+                }
+            }
+        });
     }
 
     private void setButtonHandlers(){
@@ -92,7 +129,6 @@ public class MainController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 if (selectedExcelFile != null && selectedImgDirectory != null){
-                    System.out.println("GO!\n-Excel: " + selectedExcelFile.getPath() + "\n-Dir: " + selectedImgDirectory.getPath());
 
                     String errorMessageFooter = "\nBitte versuchen Sie es erneut!";
                     try {
@@ -121,7 +157,6 @@ public class MainController implements Initializable {
                         e.printStackTrace();
                     }
                 }else {
-                    System.out.println("Please finish selection!");
                     if (selectedExcelFile == null && selectedImgDirectory != null){
                         displayError("Bitte wählen Sie ein Excel-File aus!");
                     }else if (selectedExcelFile != null && selectedImgDirectory == null){

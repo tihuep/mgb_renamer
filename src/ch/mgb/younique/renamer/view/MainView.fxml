@@ -60,13 +60,13 @@
                 <Label fx:id="mainLabelExcelSelect"/>
                 <HBox>
                     <TextField fx:id="mainInpColA" disable="true" maxWidth="40.0" prefHeight="26.0" prefWidth="50.0"
-                               promptText="Col A">
+                               promptText="Col 1">
                         <font>
                             <Font size="10.0"/>
                         </font>
                     </TextField>
                     <TextField fx:id="mainInpColB" disable="true" maxWidth="40.0" prefHeight="26.0" prefWidth="50.0"
-                               promptText="Col B">
+                               promptText="Col 1">
                         <font>
                             <Font size="10.0"/>
                         </font>

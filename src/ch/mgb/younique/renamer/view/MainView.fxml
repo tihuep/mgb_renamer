@@ -26,14 +26,14 @@
             </font>
         </Label>
         <Text strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Um eine Dateimenge mit den jeweiligen Artikelnummern zu benennen, wählen Sie eine Excel-Tabelle mit den EAN-Nummern in Spalte A und den Artiklenummern in spalte B."
+              text="Wählen Sie eine Excel-Datei aus und geben Sie die Spalten und Zeilen an. Die erste Spalte soll den Ausgangswert und die zweite Spalte den einzusetzenden Wert beinhalten."
               wrappingWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <font>
                 <Font size="16.0"/>
             </font>
         </Text>
         <Text strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Wählen Sie das Verzeichnis mit der Bildmenge. ACHTUNG: Alle Files im Verzeichnis werden umbenannt, sofern eine korrespondierende Artikelnummer in der Excl-Tabelle existiert."
+              text="Wählen Sie das Verzeichnis mit der Bildmenge. ACHTUNG: Alle Files im Verzeichnis werden umbenannt, sofern eine korrespondierende Zeile in der Excel-Tabelle existiert."
               wrappingWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <font>
                 <Font size="16.0"/>
@@ -59,6 +59,11 @@
                 </Button>
                 <Label fx:id="mainLabelExcelSelect"/>
                 <HBox>
+                    <Text text="Spalte: ">
+                        <font>
+                            <Font size="10.0"/>
+                        </font>
+                    </Text>
                     <TextField fx:id="mainInpColA" disable="true" maxWidth="40.0" prefHeight="26.0" prefWidth="50.0"
                                promptText="Col 1">
                         <font>
@@ -73,6 +78,11 @@
                     </TextField>
                 </HBox>
                 <HBox>
+                    <Text text="Zeile: ">
+                        <font>
+                            <Font size="10.0"/>
+                        </font>
+                    </Text>
                     <TextField fx:id="mainInpRowStart" disable="true" maxWidth="40.0" prefHeight="26.0" prefWidth="50.0"
                                promptText="Start">
                         <font>

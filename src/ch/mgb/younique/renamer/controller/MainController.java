@@ -133,10 +133,10 @@ public class MainController implements Initializable {
                     String errorMessageFooter = "\nBitte versuchen Sie es erneut!";
                     try {
                         readExcelParams();
-                        Main.renamerModel.startRenaming(selectedExcelFile, selectedImgDirectory);
+                        int notRenamedCount = Main.renamerModel.startRenaming(Main.renamerModel.selectedExcelFile, Main.renamerModel.selectedImgDirectory);
 
                         Main.renamerModel.conclusionMessage = "Die Bilder konnten erfolgreich umbenannt werden.";
-
+                        Main.renamerModel.conclusionMessage = notRenamedCount != 0 ? "Alle bis auf " + notRenamedCount + " Bilder konnten erfolgreich \numbenannt werden." : "Alle Bilder konnten erfolgreich umbenannt werden.";
                     }catch (IOException ioException){
                         Main.renamerModel.conclusionMessage = "Ein unbekannter Fehler ist aufgetreten." + errorMessageFooter;
                     }catch (Exception exception){

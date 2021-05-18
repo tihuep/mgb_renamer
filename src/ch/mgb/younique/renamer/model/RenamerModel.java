@@ -8,10 +8,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RenamerModel {
     public String conclusionMessage = "";
@@ -25,7 +23,7 @@ public class RenamerModel {
 
     private List<String> renamedFiles = new ArrayList<String>();
 
-    public void startRenaming(File excel, File directory) throws ExcelException, DirectoryException, IOException{
+    public int startRenaming(File excel, File directory) throws ExcelException, DirectoryException, IOException{
         Map<Integer, String[]> excelData = new HashMap<>();
         try {
             excelData = getExcelData(excel);
@@ -34,7 +32,11 @@ public class RenamerModel {
         }
         if (validateDirectory(directory) && validateExcel(excelData)){
             rename(directory, excelData);
+            if (renamedFiles.size() == 0)
+                throw new DirectoryException("Es wurde kein umzubenennendes Bild gefunden.");
+            return Arrays.asList(directory.listFiles()).stream().filter(file -> file.getName().matches(makeFileNamePattern(this.fileExtensions))).collect(Collectors.toList()).size() - renamedFiles.size();
         }
+        return 0;
     }
 
     private void rename(File directory, Map<Integer, String[]> excelData){

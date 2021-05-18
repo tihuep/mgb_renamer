@@ -45,6 +45,8 @@ public class MainController implements Initializable {
         mainInpColB.setText("A");;
         mainInpRowStart.setText("2");
         mainInpRowEnd.setText("414");
+        mainLabelExcelSelect.setText(Main.renamerModel.selectedExcelFile != null ? Main.renamerModel.selectedExcelFile.getName() : "");
+        mainLabelDirSelect.setText(Main.renamerModel.selectedImgDirectory != null ? Main.renamerModel.selectedImgDirectory.getName() : "");
         setButtonHandlers();
 
         //prevents digit input into column fields
@@ -103,7 +105,7 @@ public class MainController implements Initializable {
                 File selectedFile = fileChooser.showOpenDialog(mainBtnExcelSelect.getScene().getWindow());
                 if (selectedFile != null) {
                     mainLabelExcelSelect.setText(selectedFile.getName());
-                    selectedExcelFile = selectedFile;
+                    Main.renamerModel.selectedExcelFile = selectedFile;
 
                     mainInpColA.setDisable(false);
                     mainInpColB.setDisable(false);
@@ -119,8 +121,8 @@ public class MainController implements Initializable {
                 DirectoryChooser directoryChooser = new DirectoryChooser();
                 File selectedDirectory = directoryChooser.showDialog(mainBtnDirSelect.getScene().getWindow());
                 if (selectedDirectory != null) {
-                    mainLabelDirSelect.setText(selectedDirectory.getPath());
-                    selectedImgDirectory = selectedDirectory;
+                    mainLabelDirSelect.setText(selectedDirectory.getName());
+                    Main.renamerModel.selectedImgDirectory = selectedDirectory;
                 }
             }
         });
@@ -128,7 +130,8 @@ public class MainController implements Initializable {
         this.mainBtnGo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if (selectedExcelFile != null && selectedImgDirectory != null){
+                mainBtnGo.getScene().setCursor(Cursor.WAIT);
+                if (Main.renamerModel.selectedExcelFile != null && Main.renamerModel.selectedImgDirectory != null){
 
                     String errorMessageFooter = "\nBitte versuchen Sie es erneut!";
                     try {
@@ -139,7 +142,7 @@ public class MainController implements Initializable {
                         Main.renamerModel.conclusionMessage = notRenamedCount != 0 ? "Alle bis auf " + notRenamedCount + " Bilder konnten erfolgreich \numbenannt werden." : "Alle Bilder konnten erfolgreich umbenannt werden.";
                     }catch (IOException ioException){
                         Main.renamerModel.conclusionMessage = "Ein unbekannter Fehler ist aufgetreten." + errorMessageFooter;
-                    }catch (Exception exception){
+                    }catch (Exception exception) {
                         Main.renamerModel.conclusionMessage = exception.getMessage() + errorMessageFooter;
                     }
 
@@ -157,11 +160,11 @@ public class MainController implements Initializable {
                         e.printStackTrace();
                     }
                 }else {
-                    if (selectedExcelFile == null && selectedImgDirectory != null){
+                    if (Main.renamerModel.selectedExcelFile == null && Main.renamerModel.selectedImgDirectory != null){
                         displayError("Bitte wählen Sie ein Excel-File aus!");
-                    }else if (selectedExcelFile != null && selectedImgDirectory == null){
+                    }else if (Main.renamerModel.selectedExcelFile != null && Main.renamerModel.selectedImgDirectory == null){
                         displayError("Bitte wählen Sie ein Verzeichnis aus!");
-                    }else if (selectedExcelFile == null && selectedImgDirectory == null){
+                    }else if (Main.renamerModel.selectedExcelFile == null && Main.renamerModel.selectedImgDirectory == null){
                         displayError("Bitte wählen Sie ein Excel-File und ein Verzeichnis aus!");
                     }
                 }

@@ -19,6 +19,9 @@ public class RenamerModel {
     public Integer excelColA = 0;
     public Integer excelColB = 0;
 
+    public File selectedExcelFile = null;
+    public File selectedImgDirectory = null;
+
     public String[] fileExtensions = new String[] {"jpg", "jpeg", "jpe", "jif", "jfif", "jfi", "png", "gif", "webp", "tiff", "tif", "psd", "raw", "arw", "cr2", "nrw", "k25", "bmp", "dib", "heif", "heic", "ind", "indd", "indt", "jp2", "j2k", "jpf", "jpx", "jpm", "mj2", "svg", "svgz", "ai", "eps", "pdf"};
 
     private List<String> renamedFiles = new ArrayList<String>();

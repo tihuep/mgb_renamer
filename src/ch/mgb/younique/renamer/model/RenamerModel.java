@@ -44,6 +44,7 @@ public class RenamerModel {
 
     private void rename(File directory, Map<Integer, String[]> excelData){
         File[] directoryListing = directory.listFiles();
+        directoryListing = Arrays.asList(directoryListing).stream().sorted(Comparator.comparing(File::getName)).collect(Collectors.toList()).toArray(new File[0]);
         for (int i = 1; i < excelData.size(); i++){
             for (File file : directoryListing) {
                 String filename = file.getName();

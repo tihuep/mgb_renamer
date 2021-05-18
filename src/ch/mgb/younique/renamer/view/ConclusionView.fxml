@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.Button?>
-<GridPane alignment="center" hgap="10" prefHeight="200.0" prefWidth="400.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.291" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.mgb.younique.renamer.controller.ConclusionController">
+<GridPane alignment="center" hgap="10" prefHeight="200.0" prefWidth="500.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.291" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.mgb.younique.renamer.controller.ConclusionController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="380.0" minWidth="10.0" prefWidth="380.0" />

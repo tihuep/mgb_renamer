@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -146,11 +147,12 @@ public class MainController implements Initializable {
                         Main.renamerModel.conclusionMessage = exception.getMessage() + errorMessageFooter;
                     }
 
+                    mainBtnGo.getScene().setCursor(Cursor.DEFAULT);
                     try {
                         Stage secondaryStage = new Stage();
                         Parent root = FXMLLoader.load(getClass().getResource("../view/ConclusionView.fxml"));
                         secondaryStage.setTitle("Renamer");
-                        secondaryStage.setScene(new Scene(root, 400, 200));
+                        secondaryStage.setScene(new Scene(root, 500, 200));
                         secondaryStage.setResizable(false);
                         secondaryStage.show();
 

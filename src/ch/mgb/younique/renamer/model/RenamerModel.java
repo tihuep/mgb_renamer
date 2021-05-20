@@ -2,6 +2,7 @@ package ch.mgb.younique.renamer.model;
 
 import ch.mgb.younique.renamer.exceptions.DirectoryException;
 import ch.mgb.younique.renamer.exceptions.ExcelException;
+import javafx.scene.Parent;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -12,6 +13,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class RenamerModel {
+    public Parent mainRoot = null;
+
     public String conclusionMessage = "";
 
     public Integer excelRowStart = 0;
@@ -27,6 +30,7 @@ public class RenamerModel {
     private List<String> renamedFiles = new ArrayList<String>();
 
     public int startRenaming(File excel, File directory) throws ExcelException, DirectoryException, IOException{
+        renamedFiles = new ArrayList<>();
         Map<Integer, String[]> excelData = new HashMap<>();
         try {
             excelData = getExcelData(excel);

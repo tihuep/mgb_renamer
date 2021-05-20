@@ -11,8 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -42,10 +46,10 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        mainInpColA.setText("I");
-        mainInpColB.setText("A");;
+        mainInpColA.setText("A");
+        mainInpColB.setText("B");;
         mainInpRowStart.setText("2");
-        mainInpRowEnd.setText("414");
+        mainInpRowEnd.setText("100");
         mainLabelExcelSelect.setText(Main.renamerModel.selectedExcelFile != null ? Main.renamerModel.selectedExcelFile.getName() : "");
         mainLabelDirSelect.setText(Main.renamerModel.selectedImgDirectory != null ? Main.renamerModel.selectedImgDirectory.getName() : "");
         setButtonHandlers();
@@ -148,19 +152,16 @@ public class MainController implements Initializable {
                     }
 
                     mainBtnGo.getScene().setCursor(Cursor.DEFAULT);
-                    try {
-                        Stage secondaryStage = new Stage();
-                        Parent root = FXMLLoader.load(getClass().getResource("../view/ConclusionView.fxml"));
-                        secondaryStage.setTitle("Renamer");
-                        secondaryStage.setScene(new Scene(root, 500, 200));
-                        secondaryStage.setResizable(false);
-                        secondaryStage.show();
 
-                        Stage stage = (Stage) mainBtnGo.getScene().getWindow();
-                        stage.close();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
+                    Stage secondaryStage = new Stage();
+
+                    Parent root = createConclusionRoot();
+
+                    secondaryStage.setTitle("Renamer");
+                    secondaryStage.setScene(new Scene(root, 500, 200));
+                    secondaryStage.setResizable(false);
+                    secondaryStage.show();
+
                 }else {
                     if (Main.renamerModel.selectedExcelFile == null && Main.renamerModel.selectedImgDirectory != null){
                         displayError("Bitte wählen Sie ein Excel-File aus!");
@@ -189,6 +190,7 @@ public class MainController implements Initializable {
 
                 String str = colA;
                 char[] ch  = str.toCharArray();
+                Main.renamerModel.excelColA = 0;
                 for(char c : ch){
                     int temp = (int)c;
                     //https://www.geeksforgeeks.org/check-whether-the-given-character-is-in-upper-case-lower-case-or-non-alphabetic-character/
@@ -204,6 +206,7 @@ public class MainController implements Initializable {
 
                 str = colB;
                 ch  = str.toCharArray();
+                Main.renamerModel.excelColB = 0;
                 for(char c : ch){
                     int temp = (int)c;
                     //https://www.geeksforgeeks.org/check-whether-the-given-character-is-in-upper-case-lower-case-or-non-alphabetic-character/
@@ -237,5 +240,43 @@ public class MainController implements Initializable {
             displayError("Bitte geben Sie Buchstaben für die Spaltenauswahl an!");
         }
         return false;
+    }
+
+    private Parent createConclusionRoot(){
+        Label conclusionTitle = new Label("Artikel Renamer");
+        conclusionTitle.setFont(new Font("size", 20));
+
+        Label errorLabelDisplay = new Label(Main.renamerModel.conclusionMessage);
+        errorLabelDisplay.setFont(new Font("size", 15));
+
+        Button errorBtnClose = new Button("Schliessen");
+        errorBtnClose.setFont(new Font("size", 13));
+
+        errorBtnClose.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Stage stage = (Stage) errorBtnClose.getScene().getWindow();
+                stage.close();
+            }
+        });
+
+        HBox separator = new HBox();
+        separator.setMinHeight(20);
+        separator.setMaxHeight(20);
+
+        HBox separator1 = new HBox();
+        separator1.setMinHeight(20);
+        separator1.setMaxHeight(20);
+
+        HBox separator2 = new HBox();
+        separator2.setMinHeight(20);
+        separator2.setMaxHeight(20);
+
+        HBox horizontalSeparator = new HBox();
+        horizontalSeparator.setMinWidth(20);
+        horizontalSeparator.setMinWidth(20);
+
+        Parent root = new HBox(horizontalSeparator, new VBox(separator, conclusionTitle, separator1, errorLabelDisplay, separator2, errorBtnClose));
+        return root;
     }
 }

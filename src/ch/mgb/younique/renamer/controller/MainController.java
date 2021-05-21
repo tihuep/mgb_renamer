@@ -4,14 +4,11 @@ import ch.mgb.younique.renamer.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -135,7 +132,6 @@ public class MainController implements Initializable {
         this.mainBtnGo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                mainBtnGo.getScene().setCursor(Cursor.WAIT);
                 if (Main.renamerModel.selectedExcelFile != null && Main.renamerModel.selectedImgDirectory != null){
 
                     String errorMessageFooter = "\nBitte versuchen Sie es erneut!";
@@ -150,9 +146,6 @@ public class MainController implements Initializable {
                     }catch (Exception exception) {
                         Main.renamerModel.conclusionMessage = exception.getMessage() + errorMessageFooter;
                     }
-
-                    mainBtnGo.getScene().setCursor(Cursor.DEFAULT);
-
                     Stage secondaryStage = new Stage();
 
                     Parent root = createConclusionRoot();
@@ -161,7 +154,6 @@ public class MainController implements Initializable {
                     secondaryStage.setScene(new Scene(root, 500, 200));
                     secondaryStage.setResizable(false);
                     secondaryStage.show();
-
                 }else {
                     if (Main.renamerModel.selectedExcelFile == null && Main.renamerModel.selectedImgDirectory != null){
                         displayError("Bitte wählen Sie ein Excel-File aus!");

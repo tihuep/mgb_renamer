@@ -58,10 +58,14 @@ public class RenamerModel {
                     if (filename.contains(ean)) {
                         int p = filename.lastIndexOf(".");
                         String filenameExt = filename.substring(p+1);
-
-                        File newFile = new File(directory, matnr.substring(0, 4) + "_" + matnr.substring(4, 7) + "_" + matnr.substring(7) + "_s" + (countMatnrOccurences(renamedFiles, matnr.substring(0, 4) + "_" + matnr.substring(4, 7) + "_" + matnr.substring(7) + ".*") + 1) + "." + filenameExt);
-                        file.renameTo(newFile);
-                        renamedFiles.add(newFile.getName());
+                        int sCounter = 1;
+                        String newFileName = matnr.substring(0, 4) + "_" + matnr.substring(4, 7) + "_" + matnr.substring(7) + "_s" + sCounter + "." + filenameExt;
+                        while (new File(directory, newFileName).exists()) {
+                            sCounter++;
+                            newFileName = matnr.substring(0, 4) + "_" + matnr.substring(4, 7) + "_" + matnr.substring(7) + "_s" + sCounter + "." + filenameExt;
+                        }
+                        file.renameTo(new File(directory, newFileName));
+                        renamedFiles.add(file.getName());
                     }
                 }
             }
